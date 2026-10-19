@@ -39,17 +39,18 @@ powershell -ExecutionPolicy Bypass -File .\instalar.ps1
 | Di exactamente | Para qué sirve |
 |---|---|
 | `Crea Profesor` o `Crear Profesor` | Crea en la carpeta actual `AGENTS.md`, `CONTEXTO.md`, `PISTAS.md` y la skill `profesor`. |
-| `Guarda contexto` o `Guardar contexto` | Crea `contexto<N>.md` nuevo en `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\contextos`. |
+| `Guarda memoria` o `Guardar memoria` | Crea `memoria<N>.md` nuevo en `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\memorias`. |
 | `Comandos`, `Ayuda` o `Lista de comandos` | Muestra esta tabla. |
 | `Dame una pista` o `Tengo una duda` | (Profesor) 3 pistas incrementales en `PISTAS.md`. |
 | `Como sigo?` o `Estoy atascado` | (Profesor) Solo el siguiente paso exacto. |
 | `Dame la solucion` o `Solucion` | (Profesor) Solución completa con explicación. |
 
-Las tres últimas solo funcionan donde ya se hizo `Crea Profesor`. El agente muestra esta tabla siempre que ofrece opciones o termina un disparador.
+Las tres últimas solo funcionan donde ya se hizo `Crea Profesor`. El agente muestra esta tabla al terminar un disparador o al ofrecer opciones, y añade una línea corta de recordatorio al final de casi todas las respuestas.
 
-## Contextos
+## Contexto y memoria
 
-Los contextos guardados viven en el disco E, fuera del repo: `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\contextos\contexto1.md`, `contexto2.md`... Cada `Guarda contexto` crea el siguiente número sin sobrescribir. Si la VM no ve el disco como `E:`, el agente pregunta la ruta.
+- **Contexto** (`CONTEXTO.md`): estado de un proyecto concreto. Vive dentro de cada proyecto y se lee solo al empezar.
+- **Memoria** (`memoria<N>.md`): resumen de la configuración y de lo hablado con el agente. Vive en el disco E, fuera del repo: `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\memorias\memoria1.md`, `memoria2.md`... Cada `Guarda memoria` crea el siguiente número sin sobrescribir. Si la VM no ve el disco como `E:`, el agente pregunta la ruta.
 
 ## Mantenimiento
 
