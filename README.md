@@ -8,7 +8,8 @@ Mi configuración global de OpenCode (canario "Miguelito", memoria con `CONTEXTO
 - `crea-profesor.md`: prompt que crea `AGENTS.md`, `CONTEXTO.md`, `PISTAS.md` y la skill `profesor` en la carpeta actual.
 - `crea-profesor.template.md`: plantilla con el marcador `{{SKILL}}` para regenerar `crea-profesor.md`.
 - `skills/profesor/SKILL.md`: la skill del profesor.
-- `instalar.ps1`: instala los archivos en `~\.config\opencode\` (Windows + PowerShell).
+- `instalar.ps1`: instala los archivos en `~\.config\opencode\` (Windows + PowerShell) y localiza la carpeta de memorias.
+- `VM-PASOS.md`: pasos de copiar y pegar para dejar lista la VM.
 
 ## Instalación en una línea (Windows 11)
 
@@ -39,7 +40,7 @@ powershell -ExecutionPolicy Bypass -File .\instalar.ps1
 | Di exactamente | Para qué sirve |
 |---|---|
 | `Crea Profesor` o `Crear Profesor` | Crea en la carpeta actual `AGENTS.md`, `CONTEXTO.md`, `PISTAS.md` y la skill `profesor`. |
-| `Guarda memoria` o `Guardar memoria` | Crea `memoria<N>.md` nuevo en `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\memorias`. |
+| `Guarda memoria` o `Guardar memoria` | Crea `memoria<N>.md` nuevo en la carpeta `memorias` (`E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\memorias`; `Y:\memorias` en la VM). |
 | `Comandos`, `Ayuda` o `Lista de comandos` | Muestra esta tabla. |
 | `Dame una pista` o `Tengo una duda` | (Profesor) 3 pistas incrementales en `PISTAS.md`. |
 | `Como sigo?` o `Estoy atascado` | (Profesor) Solo el siguiente paso exacto. |
@@ -50,7 +51,11 @@ Las tres últimas solo funcionan donde ya se hizo `Crea Profesor`. El agente mue
 ## Contexto y memoria
 
 - **Contexto** (`CONTEXTO.md`): estado de un proyecto concreto. Vive dentro de cada proyecto y se lee solo al empezar.
-- **Memoria** (`memoria<N>.md`): resumen de la configuración y de lo hablado con el agente. Vive en el disco E, fuera del repo: `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\memorias\memoria1.md`, `memoria2.md`... Cada `Guarda memoria` crea el siguiente número sin sobrescribir. Si la VM no ve el disco como `E:`, el agente pregunta la ruta.
+- **Memoria** (`memoria<N>.md`): resumen de la configuración y de lo hablado con el agente. Vive en el disco E, fuera del repo: `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\memorias\memoria1.md`, `memoria2.md`... Cada `Guarda memoria` crea el siguiente número sin sobrescribir. La carpeta tiene un archivo marcador `.memorias-agente`: el instalador la localiza buscando ese marcador (no por la letra `E:`, que en la VM puede ser otro disco) y el agente lo comprueba antes de guardar. En la VM es `Y:\memorias`. Si no la encuentra, el agente pregunta la ruta.
+
+## En la VM
+
+Guía de copiar y pegar: [`VM-PASOS.md`](VM-PASOS.md). Resumen: la VM tiene `Z:` = `E:\CURSO_ACTUAL_2026` (proyectos) e `Y:` = `13. AgentesIA` (este repo y las memorias).
 
 ## Mantenimiento
 
