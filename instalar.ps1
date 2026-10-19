@@ -7,10 +7,10 @@ $utf8 = New-Object System.Text.UTF8Encoding($false)
 function Obtener($nombre) {
     if ($PSScriptRoot) {
         $local = Join-Path $PSScriptRoot $nombre
-        if (Test-Path $local) { return [IO.File]::ReadAllText($local, $utf8) }
+        if (Test-Path $local) { return [IO.File]::ReadAllText($local, $utf8).Replace("`r`n", "`n") }
     }
     $resp = Invoke-WebRequest -Uri "$base/$nombre" -UseBasicParsing
-    return $utf8.GetString($resp.RawContentStream.ToArray())
+    return $utf8.GetString($resp.RawContentStream.ToArray()).Replace("`r`n", "`n")
 }
 
 function Buscar-Memorias {
@@ -33,7 +33,8 @@ $prompt = Join-Path $destino "crea-profesor.md"
 $memorias = Buscar-Memorias
 
 $textoAgents = (Obtener "AGENTS.global.md").Replace("{{CREA_PROFESOR}}", $prompt).Replace("{{MEMORIAS}}", $memorias)
-$textoPrompt = Obtener "crea-profesor.md"
+$skill = (Obtener "skills/profesor/SKILL.md").TrimEnd("`n")
+$textoPrompt = (Obtener "crea-profesor.template.md").Replace("{{SKILL}}", $skill)
 
 if ((Test-Path $agents) -and ([IO.File]::ReadAllText($agents, $utf8) -ne $textoAgents)) {
     Copy-Item $agents "$agents.bak" -Force
