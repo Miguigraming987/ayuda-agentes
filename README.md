@@ -34,6 +34,23 @@ powershell -ExecutionPolicy Bypass -File .\instalar.ps1
 2. Pega la línea de instalación (solo la primera vez en esa VM).
 3. Abre OpenCode en un proyecto nuevo y escribe `Crea Profesor` (también vale `Crear Profesor`).
 
+## Palabras clave
+
+| Di exactamente | Para qué sirve |
+|---|---|
+| `Crea Profesor` o `Crear Profesor` | Crea en la carpeta actual `AGENTS.md`, `CONTEXTO.md`, `PISTAS.md` y la skill `profesor`. |
+| `Guarda contexto` o `Guardar contexto` | Crea `contexto<N>.md` nuevo en `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\contextos`. |
+| `Comandos`, `Ayuda` o `Lista de comandos` | Muestra esta tabla. |
+| `Dame una pista` o `Tengo una duda` | (Profesor) 3 pistas incrementales en `PISTAS.md`. |
+| `Como sigo?` o `Estoy atascado` | (Profesor) Solo el siguiente paso exacto. |
+| `Dame la solucion` o `Solucion` | (Profesor) Solución completa con explicación. |
+
+Las tres últimas solo funcionan donde ya se hizo `Crea Profesor`. El agente muestra esta tabla siempre que ofrece opciones o termina un disparador.
+
+## Contextos
+
+Los contextos guardados viven en el disco E, fuera del repo: `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\contextos\contexto1.md`, `contexto2.md`... Cada `Guarda contexto` crea el siguiente número sin sobrescribir. Si la VM no ve el disco como `E:`, el agente pregunta la ruta.
+
 ## Mantenimiento
 
 Si cambias `skills/profesor/SKILL.md`, regenera `crea-profesor.md` sustituyendo `{{SKILL}}` de la plantilla por el contenido de la skill. Después haz commit y push, y actualiza el clon de E con `git pull`.
