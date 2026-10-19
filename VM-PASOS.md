@@ -1,50 +1,44 @@
-# Pasos en la VM (Windows 11) - copiar y pegar
+# Pasos específicos de VirtualBox (VM Windows 11)
 
-La VM `W11_SERVE_C_2026-2027` ya tiene dos carpetas compartidas (montaje automático):
+La instalación del software, de OpenCode y del profesor está en la guía principal: [`CreacionCompletaProfesorDAW.md`](https://github.com/Miguigraming987/OpenCode-Maikel/blob/main/ReglasParaAgentes/ReglasPrimordiales/CreacionCompletaProfesorDAW.md). Aquí solo está lo que cambia en una VM. Los datos propios van entre `<...>`, con **Mi ejemplo** después.
 
-| Unidad en la VM | Carpeta en el PC (disco E) | Para qué |
+## Datos
+
+| Dato | Qué es | Mi ejemplo |
 |---|---|---|
-| `Z:` | `E:\CURSO_ACTUAL_2026` | Tus proyectos del curso. Crea aquí los proyectos nuevos. |
-| `Y:` | `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA` | `ayuda-agentes` (este repo) y `memorias`. |
+| `<NOMBRE_VM>` | Nombre de la VM en VirtualBox | `W11_SERVE_C_2026-2027` |
+| `<RUTA_PROYECTOS>` | Carpeta del PC donde guardas proyectos | `E:\CURSO_ACTUAL_2026` |
+| `<RUTA_AGENTES>` | Carpeta del PC con tu repo y la carpeta `memorias` | `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA` |
 
-En la VM no uses la letra `E:`: puede ser otro disco. Usa `Z:` e `Y:`.
-
-## 0. Una sola vez: Guest Additions
-
-Si `Z:` e `Y:` no aparecen en el Explorador: en el menú de la ventana de la VM, Dispositivos > Insertar imagen de CD de las Guest Additions, ejecuta `VBoxWindowsAdditions.exe` desde la unidad de CD y reinicia.
-
-## 1. Programas (PowerShell, una sola vez)
+## 1. Comparte las carpetas (en el PC, con la VM apagada)
 
 ```powershell
-winget install OpenJS.NodeJS.LTS; winget install Git.Git; winget install GitHub.cli
+$vb = "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe"
+& $vb sharedfolder add "<NOMBRE_VM>" --name=PROYECTOS --hostpath="<RUTA_PROYECTOS>" --automount --auto-mount-point=Z:
+& $vb sharedfolder add "<NOMBRE_VM>" --name=AGENTES_IA --hostpath="<RUTA_AGENTES>" --automount --auto-mount-point=Y:
 ```
 
-Cierra PowerShell y ábrelo de nuevo. Luego:
+El nombre `AGENTES_IA` lo usa `instalar.ps1` como alternativa de búsqueda; si usas otro, cámbialo también allí.
+*Mi ejemplo:* la primera carpeta se llama `CURSO_ACTUAL_2026`; el resto, igual.
+
+## 2. Marca la carpeta de memorias (en el PC)
 
 ```powershell
-npm install -g @opencode/cli; gh auth login; git config --global user.name "Miguigraming987"; git config --global user.email "186576905+Miguigraming987@users.noreply.github.com"
+New-Item "<RUTA_AGENTES>\memorias\.memorias-agente" -Force
 ```
 
-Escribe `opencode` y, dentro, `/connect` para conectar tu proveedor de IA.
+Así el instalador y el agente reconocen la carpeta correcta aunque la letra de unidad cambie.
+*Mi ejemplo:* `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\memorias\.memorias-agente`.
 
-## 2. Mis reglas y el profesor (una sola vez)
+## 3. Guest Additions (dentro de la VM, una vez)
 
-```powershell
-irm https://raw.githubusercontent.com/Miguigraming987/ayuda-agentes/main/instalar.ps1 | iex
-```
+Si `Z:` e `Y:` no aparecen en el Explorador: menú de la VM > Dispositivos > Insertar imagen de CD de las Guest Additions, ejecuta `VBoxWindowsAdditions.exe` y reinicia.
 
-Debe terminar con `Memorias en: Y:\memorias`. Si dice `AVISO`, revisa que `Y:` está montada y repite la línea.
+## 4. Sigue la guía principal dentro de la VM
 
-Sin internet:
+Haz el camino rápido de la guía principal con estas diferencias:
+- No uses `E:` (puede ser otro disco): usa `Z:` para proyectos e `Y:` para tu repo y memorias.
+- El instalador debe terminar con `Memorias en: Y:\memorias`.
+- Dentro de una VM de VirtualBox, el instalador configura git para aceptar las carpetas compartidas.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File "Y:\ayuda-agentes\instalar.ps1"
-```
-
-## 3. Cada día
-
-```powershell
-cd Z:\mi-proyecto; opencode
-```
-
-Y escribe `Crea Profesor`. Para ver todo lo que puedes decir: `Comandos`.
+*Mi ejemplo:* `cd Z:\mi-proyecto; opencode`.

@@ -1,6 +1,6 @@
 # Documentación
 
-Resumen de lo que se ha hecho y de cómo está organizado.
+Cómo está organizada **mi** configuración (un ejemplo real). Para montar la tuya, sigue la guía [`CreacionCompletaProfesorDAW.md`](https://github.com/Miguigraming987/OpenCode-Maikel/blob/main/ReglasParaAgentes/ReglasPrimordiales/CreacionCompletaProfesorDAW.md).
 
 ## Qué es
 Configuración global de OpenCode que se instala con una línea en cualquier PC o VM con Windows 11: reglas del agente, el profesor de DAW y un sistema de contexto y memoria.

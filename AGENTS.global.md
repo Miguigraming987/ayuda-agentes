@@ -8,7 +8,7 @@
 ## Contexto y memoria (son cosas distintas)
 
 - **Contexto** (`CONTEXTO.md`): estado de un proyecto concreto. Vive dentro de cada proyecto y se lee solo al empezar.
-- **Memoria** (`memoria<N>.md`): resumen de la configuración y de lo hablado con el agente. Vive en el disco E y se guarda solo con `Guarda memoria`.
+- **Memoria** (`memoria<N>.md`): resumen de la configuración y de lo hablado con el agente. Vive en la carpeta de memorias y se guarda solo con `Guarda memoria`.
 - Al empezar cada sesión, lee `CONTEXTO.md` (si existe en la carpeta de trabajo) antes de responder a la primera petición.
 - Al terminar una tarea o cuando el usuario se despida, actualiza `CONTEXTO.md` (si existe) con:
   - Qué se hizo.
@@ -21,7 +21,7 @@
 | Di exactamente | Para qué sirve |
 |---|---|
 | `Crea Profesor` o `Crear Profesor` | Crea en la carpeta actual `AGENTS.md`, `CONTEXTO.md`, `PISTAS.md` y la skill `profesor`. |
-| `Guarda memoria` o `Guardar memoria` | Crea un archivo nuevo `memoria<N>.md` en la carpeta `memorias` (disco E; unidad `Y:` en la VM). |
+| `Guarda memoria` o `Guardar memoria` | Crea un archivo nuevo `memoria<N>.md` en la carpeta de memorias. |
 | `Comandos`, `Ayuda` o `Lista de comandos` | Muestra esta tabla. |
 | `Dame una pista` o `Tengo una duda` | (Profesor) 3 pistas incrementales de un archivo en `PISTAS.md`. |
 | `Como sigo?` o `Estoy atascado` | (Profesor) Te da solo el siguiente paso exacto. |
